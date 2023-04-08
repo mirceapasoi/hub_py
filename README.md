@@ -1,6 +1,6 @@
 # hub_py
 
-An incomplete port of @farcaster/hub-nodejs gRPC client and @farcaster/core protobuf definitions and utility functions for Python
+An incomplete port of [@farcaster/hub-nodejs](https://github.com/farcasterxyz/hub-monorepo/tree/main/packages/hub-nodejs) gRPC client and [@farcaster/core](https://github.com/farcasterxyz/hub-monorepo/tree/main/packages/core) protobuf definitions and utility functions for Python
 
 ## Protocol buffers
 
