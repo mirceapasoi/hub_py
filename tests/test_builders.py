@@ -10,7 +10,7 @@ from hub_py.generated.message_pb2 import (
     CastAddBody,
 )
 from hub_py.builders import (
-    make_message,
+    _make_message,
     make_signer_add,
     make_user_data_add,
     make_cast_add,
@@ -28,7 +28,7 @@ def example_message_data() -> MessageData:
 
 
 def test_make_message(example_signer: Ed25519Signer, example_message_data: MessageData):
-    message = make_message(example_message_data, example_signer)
+    message = _make_message(example_message_data, example_signer)
     assert isinstance(message, Message)
     assert message.data.type == example_message_data.type
     assert message.data.timestamp is not None
