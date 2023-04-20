@@ -8,16 +8,18 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class CastsByParentRequest(_message.Message):
-    __slots__ = ["cast_id", "page_size", "page_token", "reverse"]
-    CAST_ID_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ["page_size", "page_token", "parent_cast_id", "parent_url", "reverse"]
     PAGE_SIZE_FIELD_NUMBER: _ClassVar[int]
     PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
+    PARENT_CAST_ID_FIELD_NUMBER: _ClassVar[int]
+    PARENT_URL_FIELD_NUMBER: _ClassVar[int]
     REVERSE_FIELD_NUMBER: _ClassVar[int]
-    cast_id: _message_pb2.CastId
     page_size: int
     page_token: bytes
+    parent_cast_id: _message_pb2.CastId
+    parent_url: str
     reverse: bool
-    def __init__(self, cast_id: _Optional[_Union[_message_pb2.CastId, _Mapping]] = ..., page_size: _Optional[int] = ..., page_token: _Optional[bytes] = ..., reverse: bool = ...) -> None: ...
+    def __init__(self, parent_cast_id: _Optional[_Union[_message_pb2.CastId, _Mapping]] = ..., parent_url: _Optional[str] = ..., page_size: _Optional[int] = ..., page_token: _Optional[bytes] = ..., reverse: bool = ...) -> None: ...
 
 class Empty(_message.Message):
     __slots__ = []
@@ -98,28 +100,16 @@ class NameRegistryEventRequest(_message.Message):
     def __init__(self, name: _Optional[bytes] = ...) -> None: ...
 
 class ReactionRequest(_message.Message):
-    __slots__ = ["cast_id", "fid", "reaction_type"]
-    CAST_ID_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ["fid", "reaction_type", "target_cast_id", "target_url"]
     FID_FIELD_NUMBER: _ClassVar[int]
     REACTION_TYPE_FIELD_NUMBER: _ClassVar[int]
-    cast_id: _message_pb2.CastId
+    TARGET_CAST_ID_FIELD_NUMBER: _ClassVar[int]
+    TARGET_URL_FIELD_NUMBER: _ClassVar[int]
     fid: int
     reaction_type: _message_pb2.ReactionType
-    def __init__(self, fid: _Optional[int] = ..., reaction_type: _Optional[_Union[_message_pb2.ReactionType, str]] = ..., cast_id: _Optional[_Union[_message_pb2.CastId, _Mapping]] = ...) -> None: ...
-
-class ReactionsByCastRequest(_message.Message):
-    __slots__ = ["cast_id", "page_size", "page_token", "reaction_type", "reverse"]
-    CAST_ID_FIELD_NUMBER: _ClassVar[int]
-    PAGE_SIZE_FIELD_NUMBER: _ClassVar[int]
-    PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
-    REACTION_TYPE_FIELD_NUMBER: _ClassVar[int]
-    REVERSE_FIELD_NUMBER: _ClassVar[int]
-    cast_id: _message_pb2.CastId
-    page_size: int
-    page_token: bytes
-    reaction_type: _message_pb2.ReactionType
-    reverse: bool
-    def __init__(self, cast_id: _Optional[_Union[_message_pb2.CastId, _Mapping]] = ..., reaction_type: _Optional[_Union[_message_pb2.ReactionType, str]] = ..., page_size: _Optional[int] = ..., page_token: _Optional[bytes] = ..., reverse: bool = ...) -> None: ...
+    target_cast_id: _message_pb2.CastId
+    target_url: str
+    def __init__(self, fid: _Optional[int] = ..., reaction_type: _Optional[_Union[_message_pb2.ReactionType, str]] = ..., target_cast_id: _Optional[_Union[_message_pb2.CastId, _Mapping]] = ..., target_url: _Optional[str] = ...) -> None: ...
 
 class ReactionsByFidRequest(_message.Message):
     __slots__ = ["fid", "page_size", "page_token", "reaction_type", "reverse"]
@@ -134,6 +124,22 @@ class ReactionsByFidRequest(_message.Message):
     reaction_type: _message_pb2.ReactionType
     reverse: bool
     def __init__(self, fid: _Optional[int] = ..., reaction_type: _Optional[_Union[_message_pb2.ReactionType, str]] = ..., page_size: _Optional[int] = ..., page_token: _Optional[bytes] = ..., reverse: bool = ...) -> None: ...
+
+class ReactionsByTargetRequest(_message.Message):
+    __slots__ = ["page_size", "page_token", "reaction_type", "reverse", "target_cast_id", "target_url"]
+    PAGE_SIZE_FIELD_NUMBER: _ClassVar[int]
+    PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
+    REACTION_TYPE_FIELD_NUMBER: _ClassVar[int]
+    REVERSE_FIELD_NUMBER: _ClassVar[int]
+    TARGET_CAST_ID_FIELD_NUMBER: _ClassVar[int]
+    TARGET_URL_FIELD_NUMBER: _ClassVar[int]
+    page_size: int
+    page_token: bytes
+    reaction_type: _message_pb2.ReactionType
+    reverse: bool
+    target_cast_id: _message_pb2.CastId
+    target_url: str
+    def __init__(self, target_cast_id: _Optional[_Union[_message_pb2.CastId, _Mapping]] = ..., target_url: _Optional[str] = ..., reaction_type: _Optional[_Union[_message_pb2.ReactionType, str]] = ..., page_size: _Optional[int] = ..., page_token: _Optional[bytes] = ..., reverse: bool = ...) -> None: ...
 
 class SignerRequest(_message.Message):
     __slots__ = ["fid", "signer"]

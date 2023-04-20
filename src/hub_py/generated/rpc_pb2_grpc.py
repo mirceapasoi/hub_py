@@ -65,7 +65,12 @@ class HubServiceStub(object):
                 )
         self.GetReactionsByCast = channel.unary_unary(
                 '/HubService/GetReactionsByCast',
-                request_serializer=request__response__pb2.ReactionsByCastRequest.SerializeToString,
+                request_serializer=request__response__pb2.ReactionsByTargetRequest.SerializeToString,
+                response_deserializer=request__response__pb2.MessagesResponse.FromString,
+                )
+        self.GetReactionsByTarget = channel.unary_unary(
+                '/HubService/GetReactionsByTarget',
+                request_serializer=request__response__pb2.ReactionsByTargetRequest.SerializeToString,
                 response_deserializer=request__response__pb2.MessagesResponse.FromString,
                 )
         self.GetUserData = channel.unary_unary(
@@ -232,6 +237,13 @@ class HubServiceServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def GetReactionsByCast(self, request, context):
+        """To be deprecated
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetReactionsByTarget(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -412,7 +424,12 @@ def add_HubServiceServicer_to_server(servicer, server):
             ),
             'GetReactionsByCast': grpc.unary_unary_rpc_method_handler(
                     servicer.GetReactionsByCast,
-                    request_deserializer=request__response__pb2.ReactionsByCastRequest.FromString,
+                    request_deserializer=request__response__pb2.ReactionsByTargetRequest.FromString,
+                    response_serializer=request__response__pb2.MessagesResponse.SerializeToString,
+            ),
+            'GetReactionsByTarget': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetReactionsByTarget,
+                    request_deserializer=request__response__pb2.ReactionsByTargetRequest.FromString,
                     response_serializer=request__response__pb2.MessagesResponse.SerializeToString,
             ),
             'GetUserData': grpc.unary_unary_rpc_method_handler(
@@ -690,7 +707,24 @@ class HubService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/HubService/GetReactionsByCast',
-            request__response__pb2.ReactionsByCastRequest.SerializeToString,
+            request__response__pb2.ReactionsByTargetRequest.SerializeToString,
+            request__response__pb2.MessagesResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetReactionsByTarget(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/HubService/GetReactionsByTarget',
+            request__response__pb2.ReactionsByTargetRequest.SerializeToString,
             request__response__pb2.MessagesResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

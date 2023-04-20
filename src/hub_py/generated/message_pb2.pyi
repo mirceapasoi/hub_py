@@ -35,18 +35,22 @@ USER_DATA_TYPE_PFP: UserDataType
 USER_DATA_TYPE_URL: UserDataType
 
 class CastAddBody(_message.Message):
-    __slots__ = ["embeds", "mentions", "mentions_positions", "parent_cast_id", "text"]
+    __slots__ = ["embeds", "embeds_deprecated", "mentions", "mentions_positions", "parent_cast_id", "parent_url", "text"]
+    EMBEDS_DEPRECATED_FIELD_NUMBER: _ClassVar[int]
     EMBEDS_FIELD_NUMBER: _ClassVar[int]
     MENTIONS_FIELD_NUMBER: _ClassVar[int]
     MENTIONS_POSITIONS_FIELD_NUMBER: _ClassVar[int]
     PARENT_CAST_ID_FIELD_NUMBER: _ClassVar[int]
+    PARENT_URL_FIELD_NUMBER: _ClassVar[int]
     TEXT_FIELD_NUMBER: _ClassVar[int]
-    embeds: _containers.RepeatedScalarFieldContainer[str]
+    embeds: _containers.RepeatedCompositeFieldContainer[Embed]
+    embeds_deprecated: _containers.RepeatedScalarFieldContainer[str]
     mentions: _containers.RepeatedScalarFieldContainer[int]
     mentions_positions: _containers.RepeatedScalarFieldContainer[int]
     parent_cast_id: CastId
+    parent_url: str
     text: str
-    def __init__(self, embeds: _Optional[_Iterable[str]] = ..., mentions: _Optional[_Iterable[int]] = ..., parent_cast_id: _Optional[_Union[CastId, _Mapping]] = ..., text: _Optional[str] = ..., mentions_positions: _Optional[_Iterable[int]] = ...) -> None: ...
+    def __init__(self, embeds_deprecated: _Optional[_Iterable[str]] = ..., mentions: _Optional[_Iterable[int]] = ..., parent_cast_id: _Optional[_Union[CastId, _Mapping]] = ..., parent_url: _Optional[str] = ..., text: _Optional[str] = ..., mentions_positions: _Optional[_Iterable[int]] = ..., embeds: _Optional[_Iterable[_Union[Embed, _Mapping]]] = ...) -> None: ...
 
 class CastId(_message.Message):
     __slots__ = ["fid", "hash"]
@@ -61,6 +65,14 @@ class CastRemoveBody(_message.Message):
     TARGET_HASH_FIELD_NUMBER: _ClassVar[int]
     target_hash: bytes
     def __init__(self, target_hash: _Optional[bytes] = ...) -> None: ...
+
+class Embed(_message.Message):
+    __slots__ = ["cast_id", "url"]
+    CAST_ID_FIELD_NUMBER: _ClassVar[int]
+    URL_FIELD_NUMBER: _ClassVar[int]
+    cast_id: CastId
+    url: str
+    def __init__(self, url: _Optional[str] = ..., cast_id: _Optional[_Union[CastId, _Mapping]] = ...) -> None: ...
 
 class Message(_message.Message):
     __slots__ = ["data", "hash", "hash_scheme", "signature", "signature_scheme", "signer"]
@@ -107,12 +119,14 @@ class MessageData(_message.Message):
     def __init__(self, type: _Optional[_Union[MessageType, str]] = ..., fid: _Optional[int] = ..., timestamp: _Optional[int] = ..., network: _Optional[_Union[FarcasterNetwork, str]] = ..., cast_add_body: _Optional[_Union[CastAddBody, _Mapping]] = ..., cast_remove_body: _Optional[_Union[CastRemoveBody, _Mapping]] = ..., reaction_body: _Optional[_Union[ReactionBody, _Mapping]] = ..., verification_add_eth_address_body: _Optional[_Union[VerificationAddEthAddressBody, _Mapping]] = ..., verification_remove_body: _Optional[_Union[VerificationRemoveBody, _Mapping]] = ..., signer_add_body: _Optional[_Union[SignerAddBody, _Mapping]] = ..., user_data_body: _Optional[_Union[UserDataBody, _Mapping]] = ..., signer_remove_body: _Optional[_Union[SignerRemoveBody, _Mapping]] = ...) -> None: ...
 
 class ReactionBody(_message.Message):
-    __slots__ = ["target_cast_id", "type"]
+    __slots__ = ["target_cast_id", "target_url", "type"]
     TARGET_CAST_ID_FIELD_NUMBER: _ClassVar[int]
+    TARGET_URL_FIELD_NUMBER: _ClassVar[int]
     TYPE_FIELD_NUMBER: _ClassVar[int]
     target_cast_id: CastId
+    target_url: str
     type: ReactionType
-    def __init__(self, type: _Optional[_Union[ReactionType, str]] = ..., target_cast_id: _Optional[_Union[CastId, _Mapping]] = ...) -> None: ...
+    def __init__(self, type: _Optional[_Union[ReactionType, str]] = ..., target_cast_id: _Optional[_Union[CastId, _Mapping]] = ..., target_url: _Optional[str] = ...) -> None: ...
 
 class SignerAddBody(_message.Message):
     __slots__ = ["name", "signer"]

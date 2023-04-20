@@ -5,12 +5,13 @@ from hub_py.builders import make_cast_add
 from hub_py.generated.message_pb2 import (
     MessageData,
     CastAddBody,
+    Embed,
 )
 
 from .utils import get_env_signer, get_env_fid, get_env_client, get_env_network
 
 
-def main():
+def main() -> None:
     client = get_env_client()
     message_data = MessageData(
         fid=get_env_fid(),
@@ -35,14 +36,14 @@ def main():
         # Example 3: A cast with mentions and an attachment
         CastAddBody(
             text="Hey , check this out!",
-            embeds=["https://farcaster.xyz"],
+            embeds=[Embed(url="https://farcaster.xyz")],
             mentions=[3],
             mentions_positions=[4],
         ),
         # Example 4: A cast with mentions and an attachment, and a link in the text
         CastAddBody(
             text="Hey , check out https://farcaster.xyz!",
-            embeds=["https://farcaster.xyz"],
+            embeds=[Embed(url="https://farcaster.xyz")],
             mentions=[3],
             mentions_positions=[4],
         ),
@@ -63,7 +64,7 @@ def main():
         # Example 7: A cast with emoji and a link in the text and an attachment
         CastAddBody(
             text="🤓https://url-after-unicode.com can include URL immediately after emoji!!s",
-            embeds=["https://url-after-unicode.com"],
+            embeds=[Embed(url="https://url-after-unicode.com")],
             mentions=[],
             mentions_positions=[],
         ),
