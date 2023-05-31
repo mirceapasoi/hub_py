@@ -123,6 +123,21 @@ class HubServiceStub(object):
                 request_serializer=request__response__pb2.FidsRequest.SerializeToString,
                 response_deserializer=request__response__pb2.FidsResponse.FromString,
                 )
+        self.GetLink = channel.unary_unary(
+                '/HubService/GetLink',
+                request_serializer=request__response__pb2.LinkRequest.SerializeToString,
+                response_deserializer=message__pb2.Message.FromString,
+                )
+        self.GetLinksByFid = channel.unary_unary(
+                '/HubService/GetLinksByFid',
+                request_serializer=request__response__pb2.LinksByFidRequest.SerializeToString,
+                response_deserializer=request__response__pb2.MessagesResponse.FromString,
+                )
+        self.GetLinksByTarget = channel.unary_unary(
+                '/HubService/GetLinksByTarget',
+                request_serializer=request__response__pb2.LinksByTargetRequest.SerializeToString,
+                response_deserializer=request__response__pb2.MessagesResponse.FromString,
+                )
         self.GetAllCastMessagesByFid = channel.unary_unary(
                 '/HubService/GetAllCastMessagesByFid',
                 request_serializer=request__response__pb2.FidRequest.SerializeToString,
@@ -148,10 +163,20 @@ class HubServiceStub(object):
                 request_serializer=request__response__pb2.FidRequest.SerializeToString,
                 response_deserializer=request__response__pb2.MessagesResponse.FromString,
                 )
+        self.GetAllLinkMessagesByFid = channel.unary_unary(
+                '/HubService/GetAllLinkMessagesByFid',
+                request_serializer=request__response__pb2.FidRequest.SerializeToString,
+                response_deserializer=request__response__pb2.MessagesResponse.FromString,
+                )
         self.GetInfo = channel.unary_unary(
                 '/HubService/GetInfo',
-                request_serializer=request__response__pb2.Empty.SerializeToString,
+                request_serializer=request__response__pb2.HubInfoRequest.SerializeToString,
                 response_deserializer=request__response__pb2.HubInfoResponse.FromString,
+                )
+        self.GetSyncStatus = channel.unary_unary(
+                '/HubService/GetSyncStatus',
+                request_serializer=request__response__pb2.SyncStatusRequest.SerializeToString,
+                response_deserializer=request__response__pb2.SyncStatusResponse.FromString,
                 )
         self.GetAllSyncIdsByPrefix = channel.unary_unary(
                 '/HubService/GetAllSyncIdsByPrefix',
@@ -312,6 +337,25 @@ class HubServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetLink(self, request, context):
+        """Links
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetLinksByFid(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetLinksByTarget(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def GetAllCastMessagesByFid(self, request, context):
         """Bulk Methods
         """
@@ -343,9 +387,21 @@ class HubServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetAllLinkMessagesByFid(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def GetInfo(self, request, context):
         """Sync Methods
         """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetSyncStatus(self, request, context):
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -482,6 +538,21 @@ def add_HubServiceServicer_to_server(servicer, server):
                     request_deserializer=request__response__pb2.FidsRequest.FromString,
                     response_serializer=request__response__pb2.FidsResponse.SerializeToString,
             ),
+            'GetLink': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetLink,
+                    request_deserializer=request__response__pb2.LinkRequest.FromString,
+                    response_serializer=message__pb2.Message.SerializeToString,
+            ),
+            'GetLinksByFid': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetLinksByFid,
+                    request_deserializer=request__response__pb2.LinksByFidRequest.FromString,
+                    response_serializer=request__response__pb2.MessagesResponse.SerializeToString,
+            ),
+            'GetLinksByTarget': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetLinksByTarget,
+                    request_deserializer=request__response__pb2.LinksByTargetRequest.FromString,
+                    response_serializer=request__response__pb2.MessagesResponse.SerializeToString,
+            ),
             'GetAllCastMessagesByFid': grpc.unary_unary_rpc_method_handler(
                     servicer.GetAllCastMessagesByFid,
                     request_deserializer=request__response__pb2.FidRequest.FromString,
@@ -507,10 +578,20 @@ def add_HubServiceServicer_to_server(servicer, server):
                     request_deserializer=request__response__pb2.FidRequest.FromString,
                     response_serializer=request__response__pb2.MessagesResponse.SerializeToString,
             ),
+            'GetAllLinkMessagesByFid': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetAllLinkMessagesByFid,
+                    request_deserializer=request__response__pb2.FidRequest.FromString,
+                    response_serializer=request__response__pb2.MessagesResponse.SerializeToString,
+            ),
             'GetInfo': grpc.unary_unary_rpc_method_handler(
                     servicer.GetInfo,
-                    request_deserializer=request__response__pb2.Empty.FromString,
+                    request_deserializer=request__response__pb2.HubInfoRequest.FromString,
                     response_serializer=request__response__pb2.HubInfoResponse.SerializeToString,
+            ),
+            'GetSyncStatus': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetSyncStatus,
+                    request_deserializer=request__response__pb2.SyncStatusRequest.FromString,
+                    response_serializer=request__response__pb2.SyncStatusResponse.SerializeToString,
             ),
             'GetAllSyncIdsByPrefix': grpc.unary_unary_rpc_method_handler(
                     servicer.GetAllSyncIdsByPrefix,
@@ -900,6 +981,57 @@ class HubService(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
+    def GetLink(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/HubService/GetLink',
+            request__response__pb2.LinkRequest.SerializeToString,
+            message__pb2.Message.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetLinksByFid(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/HubService/GetLinksByFid',
+            request__response__pb2.LinksByFidRequest.SerializeToString,
+            request__response__pb2.MessagesResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetLinksByTarget(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/HubService/GetLinksByTarget',
+            request__response__pb2.LinksByTargetRequest.SerializeToString,
+            request__response__pb2.MessagesResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
     def GetAllCastMessagesByFid(request,
             target,
             options=(),
@@ -985,6 +1117,23 @@ class HubService(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
+    def GetAllLinkMessagesByFid(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/HubService/GetAllLinkMessagesByFid',
+            request__response__pb2.FidRequest.SerializeToString,
+            request__response__pb2.MessagesResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
     def GetInfo(request,
             target,
             options=(),
@@ -996,8 +1145,25 @@ class HubService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/HubService/GetInfo',
-            request__response__pb2.Empty.SerializeToString,
+            request__response__pb2.HubInfoRequest.SerializeToString,
             request__response__pb2.HubInfoResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetSyncStatus(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/HubService/GetSyncStatus',
+            request__response__pb2.SyncStatusRequest.SerializeToString,
+            request__response__pb2.SyncStatusResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

@@ -21,6 +21,16 @@ class CastsByParentRequest(_message.Message):
     reverse: bool
     def __init__(self, parent_cast_id: _Optional[_Union[_message_pb2.CastId, _Mapping]] = ..., parent_url: _Optional[str] = ..., page_size: _Optional[int] = ..., page_token: _Optional[bytes] = ..., reverse: bool = ...) -> None: ...
 
+class DbStats(_message.Message):
+    __slots__ = ["num_fid_events", "num_fname_events", "num_messages"]
+    NUM_FID_EVENTS_FIELD_NUMBER: _ClassVar[int]
+    NUM_FNAME_EVENTS_FIELD_NUMBER: _ClassVar[int]
+    NUM_MESSAGES_FIELD_NUMBER: _ClassVar[int]
+    num_fid_events: int
+    num_fname_events: int
+    num_messages: int
+    def __init__(self, num_messages: _Optional[int] = ..., num_fid_events: _Optional[int] = ..., num_fname_events: _Optional[int] = ...) -> None: ...
+
 class Empty(_message.Message):
     __slots__ = []
     def __init__(self) -> None: ...
@@ -61,17 +71,25 @@ class FidsResponse(_message.Message):
     next_page_token: bytes
     def __init__(self, fids: _Optional[_Iterable[int]] = ..., next_page_token: _Optional[bytes] = ...) -> None: ...
 
+class HubInfoRequest(_message.Message):
+    __slots__ = ["db_stats"]
+    DB_STATS_FIELD_NUMBER: _ClassVar[int]
+    db_stats: bool
+    def __init__(self, db_stats: bool = ...) -> None: ...
+
 class HubInfoResponse(_message.Message):
-    __slots__ = ["is_synced", "nickname", "root_hash", "version"]
-    IS_SYNCED_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ["db_stats", "is_syncing", "nickname", "root_hash", "version"]
+    DB_STATS_FIELD_NUMBER: _ClassVar[int]
+    IS_SYNCING_FIELD_NUMBER: _ClassVar[int]
     NICKNAME_FIELD_NUMBER: _ClassVar[int]
     ROOT_HASH_FIELD_NUMBER: _ClassVar[int]
     VERSION_FIELD_NUMBER: _ClassVar[int]
-    is_synced: bool
+    db_stats: DbStats
+    is_syncing: bool
     nickname: str
     root_hash: str
     version: str
-    def __init__(self, version: _Optional[str] = ..., is_synced: bool = ..., nickname: _Optional[str] = ..., root_hash: _Optional[str] = ...) -> None: ...
+    def __init__(self, version: _Optional[str] = ..., is_syncing: bool = ..., nickname: _Optional[str] = ..., root_hash: _Optional[str] = ..., db_stats: _Optional[_Union[DbStats, _Mapping]] = ...) -> None: ...
 
 class IdRegistryEventByAddressRequest(_message.Message):
     __slots__ = ["address"]
@@ -84,6 +102,44 @@ class IdRegistryEventRequest(_message.Message):
     FID_FIELD_NUMBER: _ClassVar[int]
     fid: int
     def __init__(self, fid: _Optional[int] = ...) -> None: ...
+
+class LinkRequest(_message.Message):
+    __slots__ = ["fid", "link_type", "target_fid"]
+    FID_FIELD_NUMBER: _ClassVar[int]
+    LINK_TYPE_FIELD_NUMBER: _ClassVar[int]
+    TARGET_FID_FIELD_NUMBER: _ClassVar[int]
+    fid: int
+    link_type: str
+    target_fid: int
+    def __init__(self, fid: _Optional[int] = ..., link_type: _Optional[str] = ..., target_fid: _Optional[int] = ...) -> None: ...
+
+class LinksByFidRequest(_message.Message):
+    __slots__ = ["fid", "link_type", "page_size", "page_token", "reverse"]
+    FID_FIELD_NUMBER: _ClassVar[int]
+    LINK_TYPE_FIELD_NUMBER: _ClassVar[int]
+    PAGE_SIZE_FIELD_NUMBER: _ClassVar[int]
+    PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
+    REVERSE_FIELD_NUMBER: _ClassVar[int]
+    fid: int
+    link_type: str
+    page_size: int
+    page_token: bytes
+    reverse: bool
+    def __init__(self, fid: _Optional[int] = ..., link_type: _Optional[str] = ..., page_size: _Optional[int] = ..., page_token: _Optional[bytes] = ..., reverse: bool = ...) -> None: ...
+
+class LinksByTargetRequest(_message.Message):
+    __slots__ = ["link_type", "page_size", "page_token", "reverse", "target_fid"]
+    LINK_TYPE_FIELD_NUMBER: _ClassVar[int]
+    PAGE_SIZE_FIELD_NUMBER: _ClassVar[int]
+    PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
+    REVERSE_FIELD_NUMBER: _ClassVar[int]
+    TARGET_FID_FIELD_NUMBER: _ClassVar[int]
+    link_type: str
+    page_size: int
+    page_token: bytes
+    reverse: bool
+    target_fid: int
+    def __init__(self, target_fid: _Optional[int] = ..., link_type: _Optional[str] = ..., page_size: _Optional[int] = ..., page_token: _Optional[bytes] = ..., reverse: bool = ...) -> None: ...
 
 class MessagesResponse(_message.Message):
     __slots__ = ["messages", "next_page_token"]
@@ -162,6 +218,40 @@ class SyncIds(_message.Message):
     SYNC_IDS_FIELD_NUMBER: _ClassVar[int]
     sync_ids: _containers.RepeatedScalarFieldContainer[bytes]
     def __init__(self, sync_ids: _Optional[_Iterable[bytes]] = ...) -> None: ...
+
+class SyncStatus(_message.Message):
+    __slots__ = ["divergencePrefix", "divergenceSecondsAgo", "inSync", "lastBadSync", "ourMessages", "peerId", "shouldSync", "theirMessages"]
+    DIVERGENCEPREFIX_FIELD_NUMBER: _ClassVar[int]
+    DIVERGENCESECONDSAGO_FIELD_NUMBER: _ClassVar[int]
+    INSYNC_FIELD_NUMBER: _ClassVar[int]
+    LASTBADSYNC_FIELD_NUMBER: _ClassVar[int]
+    OURMESSAGES_FIELD_NUMBER: _ClassVar[int]
+    PEERID_FIELD_NUMBER: _ClassVar[int]
+    SHOULDSYNC_FIELD_NUMBER: _ClassVar[int]
+    THEIRMESSAGES_FIELD_NUMBER: _ClassVar[int]
+    divergencePrefix: str
+    divergenceSecondsAgo: int
+    inSync: str
+    lastBadSync: int
+    ourMessages: int
+    peerId: str
+    shouldSync: bool
+    theirMessages: int
+    def __init__(self, peerId: _Optional[str] = ..., inSync: _Optional[str] = ..., shouldSync: bool = ..., divergencePrefix: _Optional[str] = ..., divergenceSecondsAgo: _Optional[int] = ..., theirMessages: _Optional[int] = ..., ourMessages: _Optional[int] = ..., lastBadSync: _Optional[int] = ...) -> None: ...
+
+class SyncStatusRequest(_message.Message):
+    __slots__ = ["peerId"]
+    PEERID_FIELD_NUMBER: _ClassVar[int]
+    peerId: str
+    def __init__(self, peerId: _Optional[str] = ...) -> None: ...
+
+class SyncStatusResponse(_message.Message):
+    __slots__ = ["is_syncing", "sync_status"]
+    IS_SYNCING_FIELD_NUMBER: _ClassVar[int]
+    SYNC_STATUS_FIELD_NUMBER: _ClassVar[int]
+    is_syncing: bool
+    sync_status: _containers.RepeatedCompositeFieldContainer[SyncStatus]
+    def __init__(self, is_syncing: bool = ..., sync_status: _Optional[_Iterable[_Union[SyncStatus, _Mapping]]] = ...) -> None: ...
 
 class TrieNodeMetadataResponse(_message.Message):
     __slots__ = ["children", "hash", "num_messages", "prefix"]

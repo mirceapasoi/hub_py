@@ -8,22 +8,25 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 
 DESCRIPTOR: _descriptor.FileDescriptor
 GOSSIP_VERSION_V1: GossipVersion
+GOSSIP_VERSION_V1_1: GossipVersion
 
 class ContactInfoContent(_message.Message):
-    __slots__ = ["count", "excluded_hashes", "gossip_address", "hub_version", "network", "rpc_address"]
+    __slots__ = ["app_version", "count", "excluded_hashes", "gossip_address", "hub_version", "network", "rpc_address"]
+    APP_VERSION_FIELD_NUMBER: _ClassVar[int]
     COUNT_FIELD_NUMBER: _ClassVar[int]
     EXCLUDED_HASHES_FIELD_NUMBER: _ClassVar[int]
     GOSSIP_ADDRESS_FIELD_NUMBER: _ClassVar[int]
     HUB_VERSION_FIELD_NUMBER: _ClassVar[int]
     NETWORK_FIELD_NUMBER: _ClassVar[int]
     RPC_ADDRESS_FIELD_NUMBER: _ClassVar[int]
+    app_version: str
     count: int
     excluded_hashes: _containers.RepeatedScalarFieldContainer[str]
     gossip_address: GossipAddressInfo
     hub_version: str
     network: _message_pb2.FarcasterNetwork
     rpc_address: GossipAddressInfo
-    def __init__(self, gossip_address: _Optional[_Union[GossipAddressInfo, _Mapping]] = ..., rpc_address: _Optional[_Union[GossipAddressInfo, _Mapping]] = ..., excluded_hashes: _Optional[_Iterable[str]] = ..., count: _Optional[int] = ..., hub_version: _Optional[str] = ..., network: _Optional[_Union[_message_pb2.FarcasterNetwork, str]] = ...) -> None: ...
+    def __init__(self, gossip_address: _Optional[_Union[GossipAddressInfo, _Mapping]] = ..., rpc_address: _Optional[_Union[GossipAddressInfo, _Mapping]] = ..., excluded_hashes: _Optional[_Iterable[str]] = ..., count: _Optional[int] = ..., hub_version: _Optional[str] = ..., network: _Optional[_Union[_message_pb2.FarcasterNetwork, str]] = ..., app_version: _Optional[str] = ...) -> None: ...
 
 class GossipAddressInfo(_message.Message):
     __slots__ = ["address", "dns_name", "family", "port"]
